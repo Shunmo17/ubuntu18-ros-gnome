@@ -22,6 +22,7 @@ RUN apt update && apt install -y \
     nautilus \
     gedit \
     vim \
+    firefox \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -134,10 +135,24 @@ RUN apt update && \
     mkdir /root/.vnc
 
 ADD include/xstartup /root/.vnc/xstartup
-ADD include/passwd /root/.vnc/passwd
+ADD include/passwd /root/.vnc/passwd 
 
 RUN chmod 600 /root/.vnc/passwd
 
 CMD /usr/bin/vncserver :1 -geometry 1280x800 -depth 24 && tail -f /root/.vnc/*:1.log
 
 EXPOSE 5901
+
+##############################################################################
+##                                  Gate One                              ##
+##############################################################################
+# WORKDIR /
+# RUN wget https://bootstrap.pypa.io/get-pip.py
+# RUN python get-pip.py
+# RUN pip install 'tornado==2.4.1'
+# RUN wget https://github.com/downloads/liftoff/GateOne/gateone-1.1.tar.gz
+# RUN tar zxvf gateone-1.1.tar.gz
+# WORKDIR /GateOne
+# RUN python setup.py install
+# RUN apt upgrade -y
+# CMD /opt/gateone//gateone.py
