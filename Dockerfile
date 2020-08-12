@@ -118,12 +118,17 @@ RUN echo "source /catkin_build.bash" >> ~/.bashrc
 ##############################################################################
 RUN apt update && \
     apt install -y --no-install-recommends ubuntu-desktop && \
-    apt install -y gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal && \
+    apt install -y gnome-panel \ 
+        gnome-settings-daemon \ 
+        metacity gnome-terminal \ 
+        xorg \
+        gnome-core \
+        gnome-session-flashback && \
     apt install -y tightvncserver && \
     mkdir /root/.vnc
 
-ADD xstartup /root/.vnc/xstartup
-ADD passwd /root/.vnc/passwd
+ADD include/xstartup /root/.vnc/xstartup
+ADD include/passwd /root/.vnc/passwd
 
 RUN chmod 600 /root/.vnc/passwd
 
