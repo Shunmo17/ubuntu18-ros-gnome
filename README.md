@@ -1,5 +1,17 @@
 # Ubuntu-ROS-Gnome
 
+![bandicam 2020-08-13 00-04-36-359](https://user-images.githubusercontent.com/45775392/90031889-b8e16200-dcf8-11ea-8ef1-66bac61906b2.jpg)
+
+## Environemnt
+- ThinkPad X1 carbon
+    - OS : Ubuntu 18.04
+    - CPU : Core i5 7300U @2.60GHz
+    - RAM : 8 GB
+- Synology DS216+II
+    - OS : DSM 6.2.3-25426 Update 2
+    - CPU : Celeron N3060 @1.60GHz
+    - RAM : 8 GB
+
 ## Description
 
 Docker for ROS with gnome GUI
