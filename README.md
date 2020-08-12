@@ -6,7 +6,7 @@ Docker for ROS with gnome GUI
 
 Catkin build is automaticaly run when you open a terminal.
 
-
+VNC password was set to `password`.
 
 ## Version
 

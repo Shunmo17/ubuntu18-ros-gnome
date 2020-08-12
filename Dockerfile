@@ -114,16 +114,22 @@ RUN	/bin/bash -c "source /opt/ros/{ROS_DISTRO}/setup.bash; catkin init"
 RUN echo "source /catkin_build.bash" >> ~/.bashrc
 
 ##############################################################################
+##                                Install Gnome                             ##
+##############################################################################
+RUN apt update && apt install -y \
+    gnome-session \
+    gnome-panel \ 
+    gnome-settings-daemon \ 
+    metacity \
+    gnome-terminal \
+    && apt clean \
+    && rm -rf /var/lib/apt/lists/*
+
+##############################################################################
 ##                             VNC Server Setting                           ##
 ##############################################################################
 RUN apt update && \
     apt install -y --no-install-recommends ubuntu-desktop && \
-    apt install -y gnome-panel \ 
-        gnome-settings-daemon \ 
-        metacity gnome-terminal \ 
-        xorg \
-        gnome-core \
-        gnome-session-flashback && \
     apt install -y tightvncserver && \
     mkdir /root/.vnc
 
