@@ -117,8 +117,17 @@ RUN echo "source /catkin_build.bash" >> ~/.bashrc
 ##############################################################################
 ##                                Install Gnome                             ##
 ##############################################################################
+# RUN apt update && apt install -y \
+#     ubuntu-gnome-desktop \
+#     && apt clean \
+#     && rm -rf /var/lib/apt/lists/*
+
 RUN apt update && apt install -y \
-    ubuntu-gnome-desktop \
+    gnome-session \
+    gnome-panel \ 
+    gnome-settings-daemon \ 
+    metacity \
+    gnome-terminal \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -130,12 +139,21 @@ RUN apt update && \
     apt install -y tightvncserver lxde && \
     mkdir /root/.vnc
 
-COPY include/xstartup /root/.vnc/xstartup
-COPY include/passwd /root/.vnc/passwd 
+ADD include/xstartup /root/.vnc/xstartup
+ADD include/passwd /root/.vnc/passwd 
 
 RUN chmod 600 /root/.vnc/passwd
 
-RUN echo "systemctl start gdm" >> ~/.bashrc
-RUN echo "/usr/bin/vncserver :1 -geometry 1920x1080 -depth 24" >> ~/.bashrc
+CMD /usr/bin/vncserver :1 -geometry 1280x800 -depth 24 && tail -f /root/.vnc/*:1.log
 
 EXPOSE 5901
+
+# COPY include/xstartup /root/.vnc/xstartup
+# COPY include/passwd /root/.vnc/passwd 
+
+# RUN chmod 600 /root/.vnc/passwd
+
+# RUN echo "systemctl start gdm" >> ~/.bashrc
+# RUN echo "/usr/bin/vncserver :1 -geometry 1920x1080 -depth 24" >> ~/.bashrc
+
+# EXPOSE 5901
