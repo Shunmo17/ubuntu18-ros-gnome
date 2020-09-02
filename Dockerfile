@@ -118,11 +118,7 @@ RUN echo "source /catkin_build.bash" >> ~/.bashrc
 ##                                Install Gnome                             ##
 ##############################################################################
 RUN apt update && apt install -y \
-    gnome-session \
-    gnome-panel \ 
-    gnome-settings-daemon \ 
-    metacity \
-    gnome-terminal \
+    ubuntu-gnome-desktop \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -131,28 +127,15 @@ RUN apt update && apt install -y \
 ##############################################################################
 RUN apt update && \
     apt install -y --no-install-recommends ubuntu-desktop && \
-    apt install -y tightvncserver && \
+    apt install -y tightvncserver lxde && \
     mkdir /root/.vnc
 
-ADD include/xstartup /root/.vnc/xstartup
-ADD include/passwd /root/.vnc/passwd 
+COPY include/xstartup /root/.vnc/xstartup
+COPY include/passwd /root/.vnc/passwd 
 
 RUN chmod 600 /root/.vnc/passwd
 
-CMD /usr/bin/vncserver :1 -geometry 1280x800 -depth 24 && tail -f /root/.vnc/*:1.log
+RUN echo "systemctl start gdm" >> ~/.bashrc
+RUN echo "/usr/bin/vncserver :1 -geometry 1920x1080 -depth 24" >> ~/.bashrc
 
 EXPOSE 5901
-
-##############################################################################
-##                                  Gate One                              ##
-##############################################################################
-# WORKDIR /
-# RUN wget https://bootstrap.pypa.io/get-pip.py
-# RUN python get-pip.py
-# RUN pip install 'tornado==2.4.1'
-# RUN wget https://github.com/downloads/liftoff/GateOne/gateone-1.1.tar.gz
-# RUN tar zxvf gateone-1.1.tar.gz
-# WORKDIR /GateOne
-# RUN python setup.py install
-# RUN apt upgrade -y
-# CMD /opt/gateone//gateone.py
