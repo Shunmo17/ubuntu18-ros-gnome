@@ -117,12 +117,8 @@ RUN echo "source /catkin_build.bash" >> ~/.bashrc
 ##############################################################################
 ##                                Install Gnome                             ##
 ##############################################################################
-# RUN apt update && apt install -y \
-#     ubuntu-gnome-desktop \
-#     && apt clean \
-#     && rm -rf /var/lib/apt/lists/*
-
 RUN apt update && apt install -y \
+    ubuntu-gnome-desktop \
     gnome-session \
     gnome-panel \ 
     gnome-settings-daemon \ 
@@ -134,10 +130,21 @@ RUN apt update && apt install -y \
 ##############################################################################
 ##                             VNC Server Setting                           ##
 ##############################################################################
-RUN apt update && \
-    apt install -y --no-install-recommends ubuntu-desktop && \
-    apt install -y tightvncserver lxde && \
-    mkdir /root/.vnc
+# RUN apt update && \
+#     apt install -y --no-install-recommends ubuntu-desktop && \
+#     apt install -y tightvncserver lxde && \
+#     mkdir /root/.vnc
+RUN apt update && apt install -y --no-install-recommends \
+    ubuntu-desktop
+RUN apt update && apt install -y \
+    tigervnc-common \
+    tigervnc-standalone-server \
+    tigervnc-scraping-server \
+    gnome-panel \
+    gnome-settings-daemon \
+    metacity nautilus gnome-terminal \
+    tightvncserver
+RUN mkdir /root/.vnc
 
 ADD include/xstartup /root/.vnc/xstartup
 ADD include/passwd /root/.vnc/passwd 
@@ -147,13 +154,3 @@ RUN chmod 600 /root/.vnc/passwd
 CMD /usr/bin/vncserver :1 -geometry 1280x800 -depth 24 && tail -f /root/.vnc/*:1.log
 
 EXPOSE 5901
-
-# COPY include/xstartup /root/.vnc/xstartup
-# COPY include/passwd /root/.vnc/passwd 
-
-# RUN chmod 600 /root/.vnc/passwd
-
-# RUN echo "systemctl start gdm" >> ~/.bashrc
-# RUN echo "/usr/bin/vncserver :1 -geometry 1920x1080 -depth 24" >> ~/.bashrc
-
-# EXPOSE 5901

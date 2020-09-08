@@ -102,8 +102,6 @@ vnc://{IP_ADDRESS}:5901
 
 
 
-
-
 ## Others
 
 ### alias
@@ -113,4 +111,8 @@ cd {DIR} = cd {DIR} && ls
 ```
 
 
+
+## Reference
+
+https://github.com/queeno/docker-ubuntu-desktop
 
